@@ -10,9 +10,18 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::latest()->paginate(5);
+        // $students = Student::latest()->paginate(5);
+        // return view('students.index', compact('students'));
+        $search = $request->input('search');
+
+        $students = Student::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('course', 'like', "%{$search}%");
+        })->latest()->paginate(5);
+
         return view('students.index', compact('students'));
     }
 
@@ -86,4 +95,5 @@ class StudentController extends Controller
         return redirect()->route('students.index')
             ->with('success', 'Student deleted successfully');
     }
+    
 }
