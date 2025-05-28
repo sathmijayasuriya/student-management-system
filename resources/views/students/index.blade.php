@@ -5,18 +5,18 @@
         ['label' => 'Students', 'url' => route('students.index')],
         ['label' => 'lists', 'url' => route('students.index')],
     ]" />
-
     <div class="bg-gray-100 rounded py-5 px-20">
-        {{-- <h1 class="text-2xl font-bold mb-14">Students List</h1> --}}
-        <div class="flex justify-between mb-4 ">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <a href="{{ route('students.create') }}" class="btn btn-outline-primary">
                 + Add Student
             </a>
-            <form method="GET" action="{{ route('students.index') }}" class="flex">
-                <input type="text" name="search" placeholder="Search..." class="border px-2 py-1 rounded-2">
-                <button class="bg-gray-200 px-3 rounded-r">Search</button>
+
+            <form method="GET" action="{{ route('students.index') }}" class="d-flex">
+                <input type="text" name="search" placeholder="Search..." class="form-control me-2">
+                <button class="btn btn-outline-muted">Search</button>
             </form>
         </div>
+
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
@@ -24,7 +24,7 @@
             </div>
         @endif
 
-        <table class="w-full table-auto bg-white  rounded px-20">
+        <table class="table">
             <thead class="bg-gray-150 ">
                 <tr>
                     <th class="p-4 text-left">Name</th>
@@ -40,11 +40,12 @@
                         <td class="p-3">{{ $student->email }}</td>
                         <td class="p-3">{{ $student->course }}</td>
                         <td class="p-3 text-right space-x-4">
-                            <a href="{{ route('students.edit', $student->id) }}" class="text-blue-800 hover:text-black">
+                            <button href="{{ route('students.edit', $student->id) }}" class="btn btn-light">
                                 <i class="ti ti-edit"></i>
-                                Edit</a>
-                            <button type="submit" onclick="openDeleteModal({{ $student->id }}, '{{ $student->name }}')"
-                                class="text-red-600">
+                                Edit</button>
+                            <button href="javascript:void(0);"
+                                onclick="openDeleteModal({{ $student->id }}, '{{ $student->name }}')"
+                                class="btn btn-outline-danger ">
                                 <i class="ti ti-trash"></i>
                                 Delete</button>
                         </td>

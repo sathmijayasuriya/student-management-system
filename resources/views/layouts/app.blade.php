@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <link rel="shortcut icon" type="image/png" href="./assets/images/logos/favicon.png" />
     {{-- <link rel="stylesheet" href="./assets/css/styles.min.css" /> --}}

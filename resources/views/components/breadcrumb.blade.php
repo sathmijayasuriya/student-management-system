@@ -1,18 +1,16 @@
-<!-- Always remember that you are absolutely unique. Just like everyone else. - Margaret Mead -->
 @props(['items' => []])
 
-<nav class="text-xl text-gray-600 mb-4" aria-label="Breadcrumb">
-    <ol class="list-reset flex">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-4">
         @foreach ($items as $index => $item)
-            @if (isset($item['url']))
-                <li>
-                    <a href="{{ $item['url'] }}" class="text-grey-600 hover:underline">{{ $item['label'] }}</a>
-                    @if (!$loop->last)
-                        <span class="mx-2">/</span>
-                    @endif
+            @if (isset($item['url']) && !$loop->last)
+                <li class="breadcrumb-item">
+                    <a href="{{ $item['url'] }}">{{ $item['label'] }}</a>
                 </li>
             @else
-                <li class="text-gray-500">{{ $item['label'] }}</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ $item['label'] }}
+                </li>
             @endif
         @endforeach
     </ol>
