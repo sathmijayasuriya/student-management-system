@@ -3,7 +3,7 @@
        <div>
            <div class="brand-logo d-flex align-items-center justify-content-between">
                <a href="/" class="text-nowrap logo-img">
-                   <img src="assets/images/logos/logoweb.png" alt="" width="40" height="auto" />
+                   <img src="{{asset('assets/images/logos/logoweb.png')}}" alt="" width="40" height="auto" />
                </a>
                <div class="close-btn  d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                    <i class="ti ti-x fs-6"></i>
@@ -34,7 +34,7 @@
                        </a>
                    </li>
                    <li class="sidebar-item">
-                       <a class="sidebar-link justify-content-between" href="#" aria-expanded="false">
+                       <a class="sidebar-link justify-content-between" href="/" aria-expanded="false">
                            <div class="d-flex align-items-center gap-3">
                                <span class="d-flex">
                                    <i class="ti ti-arrow-merge-right"></i>

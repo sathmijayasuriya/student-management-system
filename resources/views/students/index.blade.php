@@ -13,7 +13,7 @@
 
             <form method="GET" action="{{ route('students.index') }}" class="d-flex">
                 <input type="text" name="search" placeholder="Search..." class="form-control me-2">
-                <button class="btn btn-outline-muted">Search</button>
+                <button class="btn btn-outline-grey-s">Search</button>
             </form>
         </div>
 
@@ -35,16 +35,20 @@
             </thead>
             <tbody>
                 @foreach ($students as $student)
-                    <tr class="border-t">
+                    <tr class="border-t cursor-pointer"
+                        onclick="openViewModal({{ $student->id }}, '{{ $student->name }}', '{{ $student->email }}', '{{ $student->course }}', '{{ $student->age }}')">
                         <td class="p-3">{{ $student->name }}</td>
                         <td class="p-3">{{ $student->email }}</td>
                         <td class="p-3">{{ $student->course }}</td>
                         <td class="p-3 text-right space-x-4">
-                            <button href="{{ route('students.edit', $student->id) }}" class="btn btn-light">
-                                <i class="ti ti-edit"></i>
-                                Edit</button>
+                            <button class="btn btn-light"
+                                style="background-color: transparent !important; border-color: #ffffff !important; color: #000000 !important;"
+                                onclick="event.stopPropagation(); openEditModal({{ $student->id }}, '{{ $student->name }}', '{{ $student->email }}', '{{ $student->course }}', '{{ $student->age }}')">
+                                <i class="ti ti-pencil"></i>
+                                Edit
+                            </button>
                             <button href="javascript:void(0);"
-                                onclick="openDeleteModal({{ $student->id }}, '{{ $student->name }}')"
+                                onclick="event.stopPropagation(); openDeleteModal({{ $student->id }}, '{{ $student->name }}')"
                                 class="btn btn-outline-danger ">
                                 <i class="ti ti-trash"></i>
                                 Delete</button>
@@ -66,4 +70,6 @@
                     }
                 }, 1000);
             </script>
+            @include('students.edit')
+            @include('students.view')
         @endsection
