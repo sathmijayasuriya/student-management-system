@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\RegisteredAdminController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\PasswordResetLinkController;
+use App\Http\Controllers\NewPasswordController;
 
 // Route::get('/', function () {
 //     return view('dashboard.index');
@@ -21,6 +23,16 @@ use App\Http\Controllers\SessionController;
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
     Route::post('/login', [SessionController::class, 'store']);
+
+        // Password Reset Routes
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+                ->name('password.request');
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
+                ->name('password.email');
+    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+                ->name('password.reset');
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])
+                ->name('password.update');
 });
 
 
