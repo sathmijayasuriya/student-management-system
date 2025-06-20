@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Student;
-class User extends Authenticatable    
+use Illuminate\Auth\Passwords\CanResetPassword; 
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract; 
+
+class User extends Authenticatable implements CanResetPasswordContract  
 {
-    use HasFactory,Notifiable;
+    use HasFactory,Notifiable, CanResetPassword;
     
     // protected $fillable = [
     //     'first_name',
@@ -21,7 +24,7 @@ class User extends Authenticatable
 
     protected $hidden = [
         'password',
-        'remember_token'
+        // 'remember_token'
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
