@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreStudentRequest;
 
 class StudentController extends Controller
 {
@@ -12,16 +14,9 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        // $students = Student::latest()->paginate(5);
-        // return view('students.index', compact('students'));
-        $search = $request->input('search');
-
-        $students = Student::when($search, function ($query, $search) {
-            return $query->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
-                ->orWhere('course', 'like', "%{$search}%");
-        })->latest()->paginate(5);
-
+        // $students = Student::all();
+        $students = Student::with('addedBy')->latest()->get();
+        // dd($students);
         return view('students.index', compact('students'));
     }
 
@@ -36,16 +31,13 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:students',
-            'course' => 'required',
-            'age' => 'required|numeric',
-        ]);
-
-        Student::create($request->all());
+        // Student::create($request->all());
+        $newstudent = new Student();
+        $newstudent->fill($request->validated());
+        $newstudent->user_id = Auth::id(); // Assuming the user is logged in
+        $newstudent->save();
 
         return redirect()->route('students.index')
             ->with('success', 'Student created successfully.');
@@ -64,22 +56,22 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        if (Auth::guest()) {
+            return redirect('/login');
+        }
         return view('students.edit', compact('student'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(StoreStudentRequest  $request, Student $updateStudent)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:students,email,' . $student->id,
-            'course' => 'required',
-            'age' => 'required|numeric',
-        ]);
+    
+        $updateStudent->fill($request->validated());
+        $updateStudent->user_id = Auth::id(); 
+        $updateStudent->save();
 
-        $student->update($request->all());
 
         return redirect()->route('students.index')
             ->with('success', 'Student updated successfully');
@@ -95,5 +87,4 @@ class StudentController extends Controller
         return redirect()->route('students.index')
             ->with('success', 'Student deleted successfully');
     }
-    
 }
