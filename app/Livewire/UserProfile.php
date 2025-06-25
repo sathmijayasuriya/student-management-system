@@ -31,7 +31,7 @@ class UserProfile extends Component
         $this->showUpdateForm = true;
         $this->showPasswordForm = false;
     }
-        public function enablePasswordChange()
+    public function enablePasswordChange()
     {
         $this->showPasswordForm = true;
         $this->showUpdateForm = false;
@@ -42,8 +42,8 @@ class UserProfile extends Component
     public function updateProfile()
     {
         $this->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|min:3|max:50|alpha',
+            'last_name' => 'required|string|min:3|max:50|alpha',
             'email' => 'required|email|unique:users,email,' . $this->userId,
         ]);
 
@@ -58,7 +58,7 @@ class UserProfile extends Component
         session()->flash('message', 'Profile updated successfully!');
     }
 
-        public function changePassword()
+    public function changePassword()
     {
         $this->validate([
             'current_password' => ['required', 'current_password'],
@@ -84,6 +84,19 @@ class UserProfile extends Component
 
         return redirect('/login');
     }
+
+    public function resetProfileInputs()
+    {
+        $user = Auth::user();
+
+        $this->first_name = $user->first_name;
+        $this->last_name = $user->last_name;
+        $this->email = $user->email;
+        
+        $this->showUpdateForm = false;
+        $this->resetErrorBag();
+    }
+
 
     public function render()
     {

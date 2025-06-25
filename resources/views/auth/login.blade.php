@@ -41,13 +41,16 @@
                             @enderror
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
-                                    <input class="form-check-input primary" type="checkbox" name="remember" value="1"
-                                        id="flexCheckChecked" {{ old('remember') ? 'checked' : '' }}>
+                                    <input class="form-check-input primary" type="checkbox" name="remember"
+                                        value="1" id="flexCheckChecked" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="form-check-label text-dark" for="flexCheckChecked">
                                         Remeber Me
-                                    </label>    
+                                    </label>
                                 </div>
-                                <a class="text-primary fw-bold" href="./index.html">Forgot Password ?</a>
+                                @if (Route::has('password.request'))
+                                    <a class="text-primary fw-bold" href="{{ route('password.request') }}">Forgot
+                                        Password ?</a>
+                                @endif
                             </div>
                             <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign
                                 In</button>
