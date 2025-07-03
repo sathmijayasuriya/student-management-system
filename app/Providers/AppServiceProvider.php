@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Student;
 use Illuminate\Support\ServiceProvider;
 use App\Observers\StudentObserver;
+use Illuminate\Pagination\Paginator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::preventLazyLoading();  
+        Model::preventLazyLoading();
         // Student::observe(StudentObserver::class);
-
+        Paginator::useBootstrap();
     }
 }
