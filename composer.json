@@ -11,8 +11,13 @@
     "require": {
         "php": "^8.2",
         "doctrine/dbal": "^4.2",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "intervention/image": "^3.11",
+        "intervention/image-laravel": "^1.5",
+        "laravel/framework": "^11.0",
+        "laravel/tinker": "^2.10.1",
+        "livewire/livewire": "^3.6",
+        "maatwebsite/excel": "3.1.55",
+        "power-components/livewire-powergrid": "^6.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
